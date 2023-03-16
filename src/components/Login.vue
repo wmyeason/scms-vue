@@ -145,9 +145,9 @@ export default {
 
 /*输入框样式*/
 .login_box {
-  width: 450px;
-  height: 330px;
-  background-color: #c8c7c5;
+  width: 500px;
+  height: 380px;
+  background-color: #dfeff713;
   border-radius: 10px;
   position: absolute;
   left: 50%;
@@ -176,9 +176,9 @@ export default {
 }
 
 .title {
-  font-family: "Helvetica Neue";
+  font-family: "Andale Mono";
   text-align: center;
-  font-size: large;
+  font-size: 30px;
   height: 40px;
   margin-top: 30px;
   color: #002fa7;

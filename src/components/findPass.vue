@@ -2,30 +2,34 @@
   <div class="container">
     <el-form class="login_form" ref="form">
       <el-form-item>
-        <label class="la">用户名:</label>
-        <el-input
-          v-model="form.username"
-          placeholder="请输入用户名称"
-          class="inType"
-        ></el-input>
+        <label class="la"
+          >用户名:
+          <el-input
+            v-model="form.username"
+            placeholder="请输入用户名称"
+            class="inType"
+          ></el-input
+        ></label>
       </el-form-item>
       <el-form-item>
-        <label class="la">电话号码:</label>
-        <el-input
-          v-model="form.phone"
-          name="phone"
-          placeholder="请输入电话号码"
-          class="inType"
-          maxlength="11"
-          @input="form.phone = form.phone.replace(/[^\d]/g, '')"
-        ></el-input>
+        <label class="la"
+          >电话号码:
+          <el-input
+            v-model="form.phone"
+            name="phone"
+            placeholder="请输入电话号码"
+            class="inType"
+            maxlength="11"
+            @input="form.phone = form.phone.replace(/[^\d]/g, '')"
+          ></el-input
+        ></label>
       </el-form-item>
 
       <Vcode :show="isShow" @success="success" @close="close" />
 
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">找回</el-button>
-        <el-button @click="toLogin">取消</el-button>
+        <el-button class="btn1" type="primary" @click="onSubmit">找回</el-button>
+        <el-button class="btn2" @click="toLogin">取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -42,7 +46,6 @@ export default {
         phone: "",
       },
       isShow: false, //验证码是否显示
-      
     };
   },
   components: {
@@ -67,8 +70,10 @@ export default {
         }
       });
       //通过验证 发送请求  跳到新的设置密码页面
-      this.$router.push({path:'/toSetNewPass',query:{username:this.form.username}});
-
+      this.$router.push({
+        path: "/toSetNewPass",
+        query: { username: this.form.username },
+      });
     },
     // 用户点击遮罩层，应该关闭模态框
     close() {
@@ -93,7 +98,7 @@ export default {
 .login_form {
   width: 500px;
   height: 250px;
-  background-color: #dbccb1;
+  background-color: #cdddd9a7;
   border-radius: 10px;
 
   position: absolute;
@@ -106,10 +111,29 @@ export default {
 }
 .inType {
   width: 300px;
+  height: 30px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  float:right
 }
 .la {
   font-size: 30px;
-  color: rebeccapurple;
-  bottom: 10px;
+  position: relative;
+  color: rgb(85, 66, 104);
+  top:24px;
+  padding-top: 10px;
+  
+}
+.btn1{
+  position: relative;
+  top:64px;
+  float: right;
+}
+.btn2{
+  position: relative;
+  top:64px;
+  float: left;
 }
 </style>

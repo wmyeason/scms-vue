@@ -66,6 +66,9 @@ export default {
       })
     },
     setValue() {
+      if(this.$route.query.username==null){
+        this.$router.push('/toRegister');
+      }
       this.form.username = this.$route.query.username;
       console.log(this.form.username);
     },
@@ -99,6 +102,7 @@ export default {
 
   padding: 0 10px;
   box-sizing: border-box;
+  
 }
 .inType {
   width: 300px;
@@ -109,5 +113,6 @@ export default {
   bottom: 10px;
   width: 20px;
   left: 20px;
+  
 }
 </style>
