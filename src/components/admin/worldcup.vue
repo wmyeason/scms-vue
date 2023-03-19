@@ -21,8 +21,92 @@
       >
     </div>
     <div class="knockout-stage">
-      <!-- 用来显示A1 B2对战信息 -->
-      <div v-show="this.sixteen == ''">
+    
+      <!-- 真实数据 -->
+      <div v-show="this.sixteen != ''" class="round-of-16 stage">
+        <h2>Round of 16</h2>
+        <div class="match" v-for="t in sixteen" :key="t.id">
+          <div :class="t.result == t.aid ? 'team winner' : 'team'">
+            {{ t.aname }}
+            <span :class="t.result == t.aid ? 'scoreWin' : 'scoreLose'">{{
+              t.ascore
+            }}</span>
+          </div>
+          <div>
+            <span class="a"> VS </span>
+          </div>
+          <div :class="t.result == t.bid ? 'team winner' : 'team'">
+            {{ t.bname }}
+            <span icon="el-icon-medal" :class="t.result == t.bid ? 'scoreWin' : 'scoreLose'">{{
+              t.bscore
+            }}</span>
+          </div>
+        </div>
+      </div>
+      <div v-show="this.quarter != ''" class="quarter-finals stage">
+        <h2>Quarter-finals</h2>
+        <div class="match" v-for="t in quarter" :key="t.id">
+          <div :class="t.result == t.aid ? 'team winner' : 'team'">
+            {{ t.aname==null?'待定':t.aname }}
+            <span :class="t.result == t.aid ? 'scoreWin' : 'scoreLose'">{{
+              t.ascore
+            }}</span>
+          </div>
+          <div>
+            <span class="a"> VS </span>
+          </div>
+          <div :class="t.result == t.bid ? 'team winner' : 'team'">
+            {{ t.bname==null?'待定':t.bname }}
+            <span :class="t.result == t.bid ? 'scoreWin' : 'scoreLose'">{{
+              t.bscore
+            }}</span>
+          </div>
+        </div>
+      </div>
+      <div v-show="this.semi != ''" class="semi-finals stage">
+        <h2>Semi-finals</h2>
+        <div class="match" v-for="t in semi" :key="t.id">
+          <div :class="t.result == t.aid ? 'team winner' : 'team'">
+            {{ t.aname==null?'待定':t.aname }}
+            <span :class="t.result == t.aid ? 'scoreWin' : 'scoreLose'">{{
+              t.ascore
+            }}</span>
+          </div>
+          <div>
+            <span class="a"> VS </span>
+          </div>
+          <div :class="t.result == t.bid ? 'team winner' : 'team'">
+            {{ t.bname==null?'待定':t.bname }}
+            <span :class="t.result == t.bid ? 'scoreWin' : 'scoreLose'">{{
+              t.bscore
+            }}</span>
+          </div>
+        </div>
+      </div>
+      <div v-show="this.final != ''" class="final stage">
+        <h2>Final</h2>
+        <div class="match" v-for="t in final" :key="t.id">
+          <div :class="t.result == t.aid ? 'team winner' : 'team'">
+            {{ t.aname==null?'待定':t.aname }}
+            <span :class="t.result == t.aid ? 'scoreWin' : 'scoreLose'">{{
+              t.ascore
+            }}</span>
+          </div>
+          <div>
+            <span class="a"> VS </span>
+          </div>
+          <div :class="t.result == t.bid ? 'team winner' : 'team'">
+            {{ t.bname==null?'待定':t.bname }}
+            <span :class="t.result == t.bid ? 'scoreWin' : 'scoreLose'">{{
+              t.bscore
+            }}</span>
+          </div>
+        </div>
+      </div>
+
+
+       <!-- 假数据 用来显示A1 B2对战信息 -->
+       <div v-show="this.sixteen == ''">
         <div class="round-of-16 stage">
           <h2>Round of 16</h2>
           <div class="match" v-for="(t, index) in sixteenNum" :key="index">
@@ -37,52 +121,36 @@
         </div>
       </div>
 
-      <div v-show="this.sixteen != ''" class="round-of-16 stage">
-        <h2>Round of 16</h2>
-        <div class="match" v-for="t in sixteen" :key="t.id">
-          <div :class="t.result == t.aid ? 'team winner' : 'team'">
-            {{ t.aname }}
-            <span class="score">{{ t.ascore }}</span>
-          </div>
-          <div>
-            <span class="a"> VS </span>
-          </div>
-          <div :class="t.result == t.bid ? 'team winner' : 'team'">
-            {{ t.bname }} <span class="score">{{ t.bscore }}</span>
-          </div>
-        </div>
-      </div>
-      <div class="quarter-finals stage">
+      <div v-show="this.quarter == ''" class="quarter-finals stage">
         <h2>Quarter-finals</h2>
-        <div class="match" v-for="t in quarter" :key="t.id">
-          <div :class="t.result == t.aid ? 'team winner' : 'team'">
-            {{ t.aname }}
-            <span class="score">{{ t.ascore }}</span>
-          </div>
+        <div class="match" v-for="(t, index) in splitString" :key="index">
+          <div class="team">{{ t.charAt(1) }}2</div>
           <div>
             <span class="a"> VS </span>
           </div>
-          <div :class="t.result == t.bid ? 'team winner' : 'team'">
-            {{ t.bname }} <span class="score">{{ t.bscore }}</span>
-          </div>
+          <div class="team winner">{{ t.charAt(0) }}2</div>
         </div>
       </div>
-      <div class="semi-finals stage">
+
+      <div v-show="this.semi == ''" class="semi-finals stage">
         <h2>Semi-finals</h2>
-        <div class="match">
-          <div class="team winner">B2</div>
-          <div class="team">F2</div>
-        </div>
-        <div class="match">
-          <div class="team winner">A2</div>
-          <div class="team">E2</div>
+        <div class="match" v-for="(t, index) in splitString2" :key="index">
+          <div class="team">{{ t.charAt(0) }}2</div>
+          <div>
+            <span class="a"> VS </span>
+          </div>
+          <div class="team winner" >{{ t.charAt(1) }}2</div>
         </div>
       </div>
-      <div class="final stage">
+
+      <div v-show="this.final == ''" class="final stage">
         <h2>Final</h2>
         <div class="match">
-          <div class="team winner">B2</div>
-          <div class="team">A2</div>
+          <div class="team">C2</div>
+          <div>
+            <span class="a"> VS </span>
+          </div>
+          <div class="team winner">G2</div>
         </div>
       </div>
     </div>
@@ -101,11 +169,20 @@ export default {
       final: [], //存放决赛比赛队伍数据
       teamNums: "",
       user: {},
-      sixteenNum: "ABCDEFGH", //存放小组号
+      sixteenNum: "ABCDEFGH", //存放16强小组号  假数据
+      semiNum: "ACEG", //4强假数据
     };
   },
   mounted() {
     this.toGetTeams();
+  },
+  computed: {
+    splitString() {
+      return this.sixteenNum.match(/.{1,2}/g);
+    },
+    splitString2() {
+      return this.semiNum.match(/.{1,2}/g);
+    },
   },
   methods: {
     GetRegisterTeam() {
@@ -117,6 +194,7 @@ export default {
         this.semi = res.data.data.semi;
         this.final = res.data.data.final;
       });
+      console.log('sss....'+this.quarter);
     },
     async toGetTeams() {
       //获取有多少参加了的队伍
@@ -204,7 +282,7 @@ export default {
           });
           this.$message({
             type: "success",
-            message: "删除成功!",
+            message: "重置成功!",
           });
         })
         .catch(() => {
@@ -238,11 +316,11 @@ export default {
 }
 
 .round-of-16 {
-  flex-grow: 2;
+  flex-grow: 0.4;
 }
 
 .quarter-finals {
-  flex-grow: 1.5;
+  flex-grow: 0.8;
 }
 
 .semi-finals {
@@ -250,7 +328,7 @@ export default {
 }
 
 .final {
-  flex-grow: 0.5;
+  flex-grow: 1.5;
 }
 
 .match {
@@ -280,11 +358,18 @@ export default {
 .match .team.winner {
   background-color: #cfc;
 }
-.score {
+.scoreWin {
   position: relative;
-  right: -20px;
-  color: black;
+  right: -10px;
+  color: rgb(8, 8, 8);
   font-weight: bold;
-  font-size: 25px;
+  font-size: 30px;
+}
+.scoreLose {
+  position: relative;
+  right: -15px;
+  color: rgb(102, 100, 100);
+  font-weight: bold;
+  font-size: 20px;
 }
 </style>
