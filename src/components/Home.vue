@@ -138,6 +138,7 @@ export default {
         450:"el-icon-notebook-1",
         500: "iconfont icon-yuangong",
         600: "iconfont icon-zhishijingsai",
+        650: "el-icon-medal-1",
         700: "iconfont icon-chengjishouji",
         800: "iconfont icon-canjiaxiaowaijingsai",
         900: "iconfont icon-dangtuanzhishijuesai",

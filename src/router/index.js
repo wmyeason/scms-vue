@@ -9,6 +9,8 @@ import Welcome from "../components/Welcome";
 import Page401 from "../components/401";
 import newArticle from "../components/newArticle";
 import articlelist from "../components/articlelist";
+import rewardlist from '../components/rewardlist'
+import rewardAll from '../components/rewardAll'
 import SeasonList from "../components/admin/SeasonList";
 import checkUser from "../components/admin/checkUser";
 import TeamList from "../components/admin/TeamList";
@@ -109,6 +111,14 @@ const routes = [{
             {
                 path: "/score/worldrace",
                 component: worldList
+            },
+            {
+                path:"/reward/rewardlist",
+                component:rewardlist,
+            },
+            {
+                path:"/reward/rewardAll",
+                component:rewardAll,
             },
             {
                 path: "/ranking/personRanking",

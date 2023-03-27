@@ -64,6 +64,7 @@
                 @click="
                   addDialogVisible = true;
                   oneRace = scope.row;
+                  oneRace.overTime='0'
                 "
                 >录入分数
               </el-button>
@@ -128,6 +129,7 @@
                 border
                 size="medium"
                 @change="removeDomain"
+                
                 >否</el-radio
               >
             </div>
@@ -148,6 +150,9 @@
             @click="
               addDialogVisible = false;
               addFormRef.domains = [];
+              oneRace.ascore='';
+              oneRace.bscore='';
+              oneRace.overTime='0';
             "
             >取消</el-button
           >
@@ -253,13 +258,13 @@ export default {
           _this.$message.success("操作成功");
           if(this.oneRace.id==15){
             alert('已决出冠军，请通知管理员重置比赛！');
-            //给冠军 亚军 季军  搬个奖
-            //TODO
+            
           }
           _this.addDialogVisible = false;
           _this.page();
         });
       }
+      this.addFormRef.domains = [];
     },
     scoreHandle() {
       //分数处理   输入值的处理
