@@ -28,7 +28,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="所属团体" prop="team.teamId">
-        <el-select v-model="form.team.teamId" filterable disabled  placeholder="请选择">
+        <el-select v-model="form.team.teamId" filterable  placeholder="请选择">
           <el-option
             v-for="item in teamList"
             :key="item.value"

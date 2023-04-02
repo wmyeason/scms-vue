@@ -404,7 +404,11 @@
         </el-form-item>
 
         <el-form-item label="项目人数">
-          <el-input v-model="addForm.itemAmount" placeholder="请输入项目人数"></el-input>
+          <el-tooltip class="item" effect="dark" placement="top-start">
+            <div slot="content">{{ itemPeopleTip }}</div>
+            <i class="el-icon-info" style="font-size: 15px; color:#409ef0;margin-left:-10px;margin-right:5px"></i>
+          </el-tooltip>
+          <el-input v-model="addForm.itemAmount" placeholder="请输入项目人数"  style="width: 300px;"></el-input>
         </el-form-item>
 
       </el-form>
@@ -475,6 +479,7 @@ export default {
       itemDetail: [],
 
       itemAddTip: "如果无数据，请先添加项目模板",
+      itemPeopleTip: "设置人数为1则是单人比赛项目，如果大于1则为团体项目！",
       userSex: [
         {
           value: "男",

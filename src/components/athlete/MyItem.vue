@@ -58,20 +58,24 @@
 
         <el-table-column label="审核状态" prop="checkStatus">
           <template slot-scope="scope">
-            <p v-if="scope.row.checkStatus == '0'">审核中ing</p>
-            <p v-else-if="scope.row.checkStatus == '1'">审核通过</p>
-            <p v-else-if="scope.row.checkStatus == '-1'">审核未通过</p>
-          </template>
+            <el-button
+              type="primary"
+              icon="el-icon-view"
+              style="position: relative; left: 30px"
+              @click="showDialog(scope.row.checkStatus)"
+              circle
+            ></el-button
+          ></template>
         </el-table-column>
 
         <el-table-column label="操作" prop="state">
           <template slot-scope="scope">
             <!--取消报名-->
             <el-button
-              :disabled="scope.row.userIds != null"
+              :disabled="scope.row.userIds != null||shouldDisable(scope.row.item.startTime)"
               size="mini"
               type="danger"
-              @click="deleteAthlete(scope.row.athleteId)"
+              @click="deleteAthlete(scope.row)"
               >取消报名
             </el-button>
           </template>
@@ -91,6 +95,25 @@
         </el-pagination>
       </div>
     </el-card>
+    <el-dialog :visible.sync="dialogVisible" align-center>
+      <el-steps :active="2" :space="1000">
+        <el-step
+          title="报名审核"
+          description="您已提交报名，请等待审核"
+          status="success"
+        ></el-step>
+        <el-step
+          title="审核中"
+          description="请等待管理员审核..."
+          :status="stepTemp.id == 0 ? 'process' : 'success'"
+        ></el-step>
+        <el-step
+          title="审核结果"
+          :description="stepTemp.description"
+          :status="stepTemp.status"
+        ></el-step>
+      </el-steps>
+    </el-dialog>
   </div>
 </template>
 
@@ -115,6 +138,9 @@ export default {
         pageSize: 10,
         query: "",
       },
+      dialogVisible: false, // 控制弹窗显示状态
+      activeStep: 0, // 步骤条当前激活的步骤
+      stepTemp: {},
       total: 0,
       // 对话框状态
       dialogTableVisible: false,
@@ -171,7 +197,8 @@ export default {
         });
     },
 
-    async deleteAthlete(athleteId) {
+    async deleteAthlete(athlete) {
+      const athleteId=athlete.athleteId;
       const _this = this;
       const confirmResult = await _this
         .$confirm("是否确定取消报名？", "提示", {
@@ -194,6 +221,24 @@ export default {
             _this.$message.error(res.data.msg);
           }
         });
+    },
+
+    showDialog(status) {
+      if (status == 0) {
+      } else if (status == 1) {
+        this.stepTemp.description = "审核通过！";
+        this.stepTemp.status = "success";
+      } else if (status == -1) {
+        this.stepTemp.description = "审核不通过！";
+        this.stepTemp.status = "error";
+      }
+      this.stepTemp.id = status;
+      this.dialogVisible = true;
+    },
+    shouldDisable(item) {
+      const itemTime = new Date(item.value)
+      console.log(itemTime > this.currentTime);
+      return itemTime > this.currentTime;
     },
 
     handleSizeChange(newSize) {

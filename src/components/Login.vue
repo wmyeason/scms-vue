@@ -40,7 +40,7 @@
           </el-button>
           <router-link to="/FindPass">忘记密码？</router-link>
           
-          <el-button type="primary" @click="submitForm('loginForm')"  style="margin-left:130px"
+          <el-button type="primary" @click="submitForm('loginForm')"  style="margin-left:180px"
             >登录
           </el-button>
           <el-button  @click="toRegister()"  

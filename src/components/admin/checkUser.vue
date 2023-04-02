@@ -80,16 +80,15 @@
         <el-table-column label="操作" prop="state">
           <template slot-scope="scope">
             <!--通过审核-->
-            <el-popconfirm >
+            <el-popconfirm title="是否确认审核通过？" @confirm="permitCheck(scope.row.athleteId, 1)">
               <el-button
                 icon="el-icon-check"
                 size="mid"
                 type="primary"
-                
                 slot="reference"
               ></el-button></el-popconfirm>
               <!--审核不通过-->
-              <el-popconfirm title="是否确认执行操作？" @confirm="permitCheck(scope.row.athleteId, -1)">
+              <el-popconfirm title="审核是否不通过？" @confirm="permitCheck(scope.row.athleteId, -1)">
               <el-button
                 type="danger"
                 icon="el-icon-s-release"
