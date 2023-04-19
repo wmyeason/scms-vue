@@ -27,7 +27,7 @@
             :content="item.content"
             placement="top-start"
           >
-            <h3 class="small">{{ item.content }}</h3>
+            <p class="con">{{ item.content }}</p>
           </el-tooltip>
         </el-carousel-item>
       </el-carousel>
@@ -45,7 +45,16 @@
       ></el-table-column>
 
       <el-table-column label="发表内容" prop="content"></el-table-column>
-      <el-table-column label="发表时间" prop="create_time"></el-table-column>
+      <el-table-column label="发表时间" prop="create_time">
+        <template slot-scope="scope">
+          {{
+            scope.row.create_time
+              .toLocaleString()
+              .replace(/T/g, " ")
+              .replace(/\.[\d]{3}Z/, "")
+          }}
+        </template>
+      </el-table-column>
 
       <el-table-column label="操作" prop="id" v-if="user.userId == 1">
         <template slot-scope="scope">
@@ -148,10 +157,9 @@ export default {
         return _this.$message.info("已取消删除");
       }
       axios.delete("/article/deleteArticle?id=" + id).then((res) => {
-        
         if (res.status == 200) {
           _this.$message.success("删除成功");
-          
+
           _this.page();
         } else {
           _this.$message.error(res.data.msg);
@@ -178,5 +186,9 @@ export default {
 
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #93d5dc;
+}
+.con {
+  text-align: center;
+  color: #f15161;
 }
 </style>

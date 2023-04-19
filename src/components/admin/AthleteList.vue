@@ -3,8 +3,8 @@
     <!--导航-->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>参数运动员管理</el-breadcrumb-item>
-      <el-breadcrumb-item>参数运动员信息</el-breadcrumb-item>
+      <el-breadcrumb-item>参赛运动员管理</el-breadcrumb-item>
+      <el-breadcrumb-item>参赛运动员信息</el-breadcrumb-item>
     </el-breadcrumb>
 
     <!--参数运动员列表主体-->
@@ -92,7 +92,6 @@
         <!--索引列-->
 
         <el-table-column type="index"></el-table-column>
-        <el-table-column label="学号" prop="user.userNo"></el-table-column>
         <el-table-column
             label="参数运动员"
             prop="user.nickname"

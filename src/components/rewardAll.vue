@@ -1,25 +1,31 @@
 <template>
   <div class="background">
     <div v-for="(p, index) in list" :key="index" style="">
-        <el-card class="card" shadow="always">
+      <el-card class="card" shadow="always">
         <el-image
-        :src="require('D:/A学习资料/Java/毕业设计/scms_pic/'+p.imgUrl)"
-        @click.stop="handleClickItem"
-        fit="cover"
-        :preview-src-list="list.map(item=>require(`D:/A学习资料/Java/毕业设计/scms_pic/`+item.imgUrl))"
-        class="image"
+          :src="require('D:/A学习资料/Java/毕业设计/scms_pic/' + p.imgUrl)"
+          @click.stop="handleClickItem"
+          fit="cover"
+          :preview-src-list="
+            list.map((item) =>
+              require(`D:/A学习资料/Java/毕业设计/scms_pic/` + item.imgUrl)
+            )
+          "
+          class="image"
       /></el-card>
     </div>
-    <el-pagination
-          :current-page="queryInfo.currentPage"
-          :page-size="queryInfo.pageSize"
-          :page-sizes="[5, 10, 20, 50]"
-          :total="total"
-          layout="total, sizes, prev, pager, next, jumper"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-        >
-        </el-pagination>
+    <div class="pageBtn">
+      <el-pagination
+        :current-page="queryInfo.currentPage"
+        :page-size="queryInfo.pageSize"
+        :page-sizes="[5, 10, 20, 50]"
+        :total="total"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      >
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -29,7 +35,7 @@ export default {
   name: "rewardAll",
   data() {
     return {
-      currentUser:"",
+      currentUser: "",
       list: [
         { pic_url: require("@/assets/reward1.png"), pic_name: "a" },
         { pic_url: require("@/assets/reward1.png"), pic_name: "b" },
@@ -43,25 +49,33 @@ export default {
       total: 0,
     };
   },
-  mounted(){
+  mounted() {
     this.currentUser = JSON.parse(localStorage.getItem("user"));
     console.log(this.currentUser);
     this.getAllReward();
   },
   methods: {
-    getAllReward(){
-      axios.get("/reward/getAll/"+this.currentUser.userId+"/"+this.currentUser.team.teamId, {
-          params: this.queryInfo,
-        }).then((res)=>{
+    getAllReward() {
+      axios
+        .get(
+          "/reward/getAll/" +
+            this.currentUser.userId +
+            "/" +
+            this.currentUser.team.teamId,
+          {
+            params: this.queryInfo,
+          }
+        )
+        .then((res) => {
           let data = res.data.data;
-          console.log('as');
-          this.total=data.total;
-          this.queryInfo.currentPage=data.current;
-          this.list=data.records;
-          this.queryInfo.pageSize=data.size;
-        console.log(this.queryInfo);
-        console.log(this.list);
-      })
+          console.log("as");
+          this.total = data.total;
+          this.queryInfo.currentPage = data.current;
+          this.list = data.records;
+          this.queryInfo.pageSize = data.size;
+          console.log(this.queryInfo);
+          console.log(this.list);
+        });
     },
     handleClickItem() {
       this.$nextTick(() => {
@@ -112,16 +126,20 @@ export default {
   bottom: 90px;
   left: -90px;
 }
-.pageBtn{
-    position: relative;
-    left: 400px;
-    bottom: -100px;
+.pageBtn {
+  width:400px;
+  height: 40px;
+  position: relative;
+  left: -400px;
+  bottom: -620px;
+  background-color: #e7798991;
+  
 }
-.card{
-    width: 280px;
-    height: 330px;
-    position: relative;
-    margin: 70px;
-    bottom: -190px;
+.card {
+  width: 280px;
+  height: 330px;
+  position: relative;
+  margin: 70px;
+  bottom: -190px;
 }
 </style>

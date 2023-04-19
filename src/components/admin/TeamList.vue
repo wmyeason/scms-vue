@@ -122,11 +122,11 @@
           <el-input v-model="editForm.teamName"></el-input>
         </el-form-item>
         <el-form-item label="领队" prop="leaderId">
-          <el-select v-model="editForm.leaderName"  placeholder="请选择">
+          <el-select v-model="editForm.leaderId"  placeholder="请选择">
             <el-option
               v-for="item in userList"
               :key="item.userId"
-              :label="item.username"
+              :label="item.nickname"
               :value="item.userId"
             > 
             </el-option>
@@ -205,7 +205,7 @@ export default {
         _this.editForm.teamId = data.team.teamId;
         _this.editForm.teamName = data.team.teamName;
         _this.editForm.leaderId = data.team.leaderId;
-        _this.editForm.leaderName = data.user.username;
+        _this.editForm.leaderName = data.user.nickname;
         _this.userList = data.userList;
         
         if(_this.editForm.leaderId==-1)_this.editForm.leaderId=null;
@@ -257,14 +257,13 @@ export default {
       });
     },
     editTeam() {
-      
       const _this = this;
       _this.$refs.editFormRef.validate(async (valid) => {
         if (!valid) {
           return;
         }
+        console.log(_this.editForm);
         axios.put("/team/editTeam", _this.editForm).then((res) => {
-          console.log(res);
           if (res.data.status != 200) {
             return _this.$message.error(res.data.msg);
           }

@@ -9,41 +9,46 @@
 
     <el-card>
       <el-popover
-          content="重置所有数据将清空本系统所有数据，包括用户、项目、分数、排名等信息"
-          placement="top-start"
-          trigger="hover"
-          width="200"
+        content="重置所有数据将清空本系统所有数据，包括用户、项目、分数、排名等信息"
+        placement="top-start"
+        trigger="hover"
+        width="200"
       >
-        <el-button slot="reference" type="danger" @click="deleteAllDataConfirm()"
-        >重置所有数据
-        </el-button
-        >
+        <el-button
+          slot="reference"
+          type="danger"
+          @click="deleteAllDataConfirm()"
+          >重置所有数据
+        </el-button>
       </el-popover>
     </el-card>
 
-
     <el-dialog
-        :visible.sync="DialogVisible"
-        title="清空系统数据"
-        width="40%"
-        @close="comfirmPassword=''"
+      :visible.sync="DialogVisible"
+      title="清空系统数据"
+      width="40%"
+      @close="comfirmPassword = ''"
     >
-      <el-form
-          ref="FormRef"
-          label-width="80px"
-          @submit.native.prevent
-      >
+      <el-form ref="FormRef" label-width="80px" @submit.native.prevent>
         <el-form-item label="删除密码">
-          <el-input v-model="comfirmPassword" placeholder="请输入删除密码" type="password"
-                    @keyup.enter.native="deleteAllData"></el-input>
+          <el-input
+            v-model="comfirmPassword"
+            placeholder="请输入删除密码"
+            type="password"
+            @keyup.enter.native="deleteAllData"
+          ></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="deleteAllData">确定</el-button>
         <el-button @click="DialogVisible = false">取消</el-button>
-
       </span>
     </el-dialog>
+    <div class="custom-dialog" v-if="showDialog">
+      <div class="custom-dialog-content">
+        <slot><p>清空成功，即将跳转到登录界面！</p></slot>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -55,22 +60,21 @@ export default {
   data() {
     return {
       comfirmPassword: "",
-      DialogVisible: false
+      DialogVisible: false,
+      showDialog: false,
     };
   },
-  created() {
-  },
+  created() {},
   methods: {
-
     async deleteAllDataConfirm() {
       const _this = this;
       const confirmResult = await _this
-          .$confirm("此操作将永久清空所有本系统所有数据，是否继续？", "提示", {
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
-            type: "confirm",
-          })
-          .catch((err) => err);
+        .$confirm("此操作将永久清空所有本系统所有数据，是否继续？", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "confirm",
+        })
+        .catch((err) => err);
       if (confirmResult !== "confirm") {
         return _this.$message.info("已取消清空");
       }
@@ -80,19 +84,24 @@ export default {
     //重置所有数据
     async deleteAllData() {
       const _this = this;
-      axios.delete("/syslog/resetAllData?comfirmPassword=" + this.comfirmPassword).then((res) => {
-        if (res.data.status == 200) {
-          _this.$message.success("清空成功");
-          _this.DialogVisible = false;
-
-        } else {
-          _this.$message.error(res.data.msg);
-          this.comfirmPassword = "";
-        }
-      });
+      axios
+        .delete("/syslog/resetAllData?comfirmPassword=" + this.comfirmPassword)
+        .then((res) => {
+          if (res.data.status == 200) {
+            _this.$message.success("清空成功");
+            _this.DialogVisible = false;
+            //清空成功，跳转到登录界面
+            _this.showDialog=true;
+            setTimeout(() => {
+              _this.showDialog=false; 
+              this.$router.push("/login");
+            }, 5000);
+          } else {
+            _this.$message.error(res.data.msg);
+            this.comfirmPassword = "";
+          }
+        });
     },
-
-
   },
 };
 </script>
@@ -101,5 +110,24 @@ export default {
 .el-breadcrumb {
   margin-bottom: 15px;
   font-size: 17px;
+}
+.custom-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+}
+
+.custom-dialog-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
 }
 </style>

@@ -80,7 +80,6 @@
         <el-table-column type="index"></el-table-column>
         <el-table-column label="运动会" prop="seasonName"></el-table-column>
         <el-table-column label="团体名称" prop="teamName"></el-table-column>
-        <el-table-column label="学号" prop="userNo"></el-table-column>
         <el-table-column label="姓名" prop="nickname"></el-table-column>
         <el-table-column label="性别" prop="userSex"></el-table-column>
         <el-table-column label="参赛项目" prop="itemName"></el-table-column>

@@ -4,7 +4,7 @@
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>参赛成绩管理</el-breadcrumb-item>
-      <el-breadcrumb-item>世界杯成绩录入</el-breadcrumb-item>
+      <el-breadcrumb-item>足球比赛成绩录入</el-breadcrumb-item>
     </el-breadcrumb>
 
     <!--参数运动员列表主体-->
@@ -103,14 +103,14 @@
             <el-input v-model="oneRace.aname" disabled></el-input>
           </el-form-item>
           <el-form-item label="主队得分">
-            <el-input v-model="oneRace.ascore"></el-input>
+            <el-input v-model.trim="oneRace.ascore"></el-input>
           </el-form-item>
           <el-form-item label="客队名称">
             <el-input v-model="oneRace.bname" disabled></el-input>
           </el-form-item>
 
           <el-form-item label="客队得分">
-            <el-input v-model="oneRace.bscore"></el-input>
+            <el-input v-model.trim="oneRace.bscore"></el-input>
           </el-form-item>
 
           <el-form-item label="是否进入点球大战">
@@ -239,6 +239,10 @@ export default {
     },
     //添加分数
     async addScore() {
+      //如果没有输入比分  则报错
+      if(this.oneRace.ascore==null||this.oneRace.ascore==''||this.oneRace.bscore==null||this.oneRace.bscore==''){
+        return this.$message.error("请输入比分！");
+      }
       if (
         this.oneRace.ascore == this.oneRace.bscore &&
         this.oneRace.overTime == 0
@@ -306,6 +310,7 @@ export default {
         this.oneRace.bscore += "[" + this.addFormRef.domains[1].value + "]";
       }
       this.flag = true;
+      
     },
     addDomain() {
       if (this.oneRace.ascore != this.oneRace.bscore) {

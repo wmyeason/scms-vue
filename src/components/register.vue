@@ -27,19 +27,19 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="所属团体" prop="team.teamId">
+      <el-form-item label="所属团体" prop="team.teamId" >
         <el-select v-model="form.team.teamId" filterable  placeholder="请选择">
           <el-option
             v-for="item in teamList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            :key="item.teamId"
+            :label="item.teamName"
+            :value="item.teamId"
           >
           </el-option>
         </el-select>
       </el-form-item>
 
-      <el-form-item label="用户类别" prop="userType">
+      <el-form-item label="用户类别" prop="userType" >
         <el-select v-model="form.userType" filterable placeholder="请选择">
           <el-option
             v-for="item in userRole"
@@ -80,7 +80,7 @@ export default {
         nickname: "",
         userSex: "",
         team: {
-          teamId: "2",
+          teamId: "",
         },
         userType: "",
         phone: "",
@@ -136,7 +136,17 @@ export default {
       },
     };
   },
+  mounted(){
+    this.getTeams();
+  },
   methods: {
+    getTeams(){
+      //获取所有的团队信息
+      axios.get("/team/getAllTeams").then((res)=>{
+        this.teamList=res.data.data;
+        console.log(this.teamList);
+      })
+    },
     onSubmit() {
         //向后端发送请求
         axios.post("/user/register", this.form).then((res) => {
@@ -156,13 +166,13 @@ export default {
 
 <style lang="less" scoped>
 .container {
-  background-color: #faaca8;
+  background-color: #f7b8b5;
   background-image: linear-gradient(19deg, #faaca8 0%, #ddd6f3 100%);
 }
 .login_form {
   width: 500px;
   height: 750px;
-  background-color: #ffe76f;
+  background-color: #f3e8bc4f;
   border-radius: 10px;
 
   position: absolute;

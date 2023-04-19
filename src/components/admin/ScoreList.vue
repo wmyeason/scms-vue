@@ -24,7 +24,7 @@
             <el-button
                 slot="append"
                 icon="el-icon-search"
-                @click="page"
+                @click="page()"
             ></el-button>
           </el-input>
         </el-col>

@@ -80,19 +80,25 @@
         <el-table-column label="操作" prop="state">
           <template slot-scope="scope">
             <!--通过审核-->
-            <el-popconfirm title="是否确认审核通过？" @confirm="permitCheck(scope.row.athleteId, 1)">
+            <el-popconfirm
+              title="是否确认审核通过？"
+              @confirm="permitCheck(scope.row.athleteId, 1)"
+            >
               <el-button
                 icon="el-icon-check"
                 size="mid"
                 type="primary"
                 slot="reference"
-              ></el-button></el-popconfirm>
-              <!--审核不通过-->
-              <el-popconfirm title="审核是否不通过？" @confirm="permitCheck(scope.row.athleteId, -1)">
+              ></el-button
+            ></el-popconfirm>
+            <!--审核不通过-->
+            <el-popconfirm
+              title="审核是否不通过？"
+              @confirm="permitCheck(scope.row.athleteId, -1)"
+            >
               <el-button
                 type="danger"
                 icon="el-icon-s-release"
-               
                 slot="reference"
               ></el-button>
             </el-popconfirm>
@@ -144,18 +150,22 @@ export default {
       const _this = this;
       axios
         .get(
-          "/item/queryItem?season.seasonId=" +
+          "/athlete/queryAthlete?season.seasonId=" +
             _this.selectSeasonId +
             "&queryInfo=",
           { params: _this.queryInfo }
         )
         .then((res) => {
+          
           let data = res.data.data;
           _this.item = data.records;
+          _this.item=_this.item.filter((i)=>i.checkStatus===0);
+          console.log(_this.item);
           _this.queryInfo.currentPage = data.current;
           _this.total = data.total;
           _this.queryInfo.pageSize = data.size;
         });
+        
     },
     handleSizeChange(newSize) {
       const _this = this;
@@ -167,14 +177,33 @@ export default {
       _this.queryInfo.currentPage = newPage;
       _this.page();
     },
-    //获取待审核的报名信息
+    //获取运动会届时
+    getSeasons() {
+      //获取可用运动会届时
+      axios
+        .get(
+          "/season/querySeason?query=&currentPage=1&pageSize=999999999&seasonStatus=1"
+        )
+        .then((res) => {
+          let data = res.data.data.records;
+          this.allSeasonOptions = data;
+          if (this.allSeasonOptions != null && this.allSeasonOptions != "") {
+            this.selectSeasonId = this.allSeasonOptions[0].seasonId;
+          }
+          this.page();
+        });
+    },
     async getScorers() {
       const _this = this;
-      axios
-        .get("/athlete/queryAthlete?query=-1&currentPage=1&pageSize=999999999")
-        .then((res) => {
-          this.item = res.data.data.records;
-        });
+      //先获取运动会届时信息   存入到下拉框中
+      _this.getSeasons();
+      // axios
+      //   .get("/athlete/queryAthlete?query=-1&currentPage=1&pageSize=999999999")
+      //   .then((res) => {
+      //     console.log(res);
+      //     this.item = res.data.data.records;
+          
+      //   });
     },
     //通过审核
     async permitCheck(id, status) {
@@ -189,6 +218,7 @@ export default {
     },
   },
   created() {
+    //获取待审核的报名信息
     this.getScorers();
   },
 };
