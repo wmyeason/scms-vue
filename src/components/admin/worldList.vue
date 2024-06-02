@@ -136,7 +136,7 @@
           </el-form-item>
           <el-form-item
             v-for="(domain, index) in addFormRef.domains"
-            :label="index == 0 ? '主队得分' : '客队得分'"
+            :label="index == 0 ? '主队点球得分' : '客队点球得分'"
             :key="index"
           >
             <el-input v-model="domain.value"></el-input>

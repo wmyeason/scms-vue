@@ -92,7 +92,7 @@ export default {
 .setpassword_form {
   width: 500px;
   height: 250px;
-  background-color: #dbccb1;
+  background-color: #d1a2f7fc;
   border-radius: 10px;
 
   position: absolute;

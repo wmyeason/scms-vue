@@ -27,7 +27,12 @@
       </el-carousel-item>
     </el-carousel>
 
-    <p>无荣誉展示，请继续加油</p>
+    <el-image
+      v-if="list == null || list.length == 0"
+      style="width: 1250px; height: 650px"
+      :src="require(`../assets/emptys.png`)"
+    >
+    </el-image>
   </div>
 </template>
 

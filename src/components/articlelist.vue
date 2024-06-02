@@ -122,6 +122,7 @@ export default {
           this.queryInfo.currentPage = data.current;
           this.total = data.total;
           this.queryInfo.pageSize = data.size;
+          console.log(this.itemList);
         });
     },
     getCarsouelAr() {
@@ -161,6 +162,7 @@ export default {
           _this.$message.success("删除成功");
 
           _this.page();
+          this.getCarsouelAr();
         } else {
           _this.$message.error(res.data.msg);
         }

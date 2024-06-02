@@ -132,7 +132,7 @@ export default {
   position: relative;
   left: -400px;
   bottom: -620px;
-  background-color: #e7798991;
+  background-color: #c2d6f18c;
   
 }
 .card {
